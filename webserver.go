@@ -30,7 +30,7 @@ func main() {
 
 // Handle requests to /
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	prettyRequest(r)
+	log.Println(prettyRequest(r))
 
 	// 404 handler
 	notFound := func() {
