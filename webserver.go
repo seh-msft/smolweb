@@ -14,8 +14,10 @@ import (
 )
 
 var (
-	port   = flag.String("p", ":1337", "Listening port for HTTP server")
+	port   = flag.String("port", ":1337", "Listening port for HTTP server")
 	target = flag.String("to", "foo.crm.dynamics.com/bar", "Path to redirect")
+	cert   = flag.String("cert", "cert.pem", "Certificate file for HTTPS")
+	key    = flag.String("key", "key.pem", "Private key file for HTTPS")
 )
 
 // Small utility web server intended to be easy to hack on top of
@@ -24,7 +26,16 @@ func main() {
 
 	http.HandleFunc("/", rootHandler)
 
-	log.Println("Listening on http://localhost" + *port + " ...")
+	if len(*cert) > 0 && len(*key) > 0 {
+		// HTTPS
+		log.Println("Listening on https://localhost" + *port + " ...")
+		log.Fatal(http.ListenAndServeTLS(*port, *cert, *key, nil))
+	} else {
+		// Plain HTTP
+		log.Println("Listening on http://localhost" + *port + " ...")
+		log.Fatal(http.ListenAndServe(*port, nil))
+	}
+
 	log.Fatal(http.ListenAndServe(*port, nil))
 }
 
