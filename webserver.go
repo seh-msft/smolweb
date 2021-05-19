@@ -18,6 +18,7 @@ var (
 	target = flag.String("to", "foo.crm.dynamics.com/bar", "Path to redirect")
 	cert   = flag.String("cert", "cert.pem", "Certificate file for HTTPS")
 	key    = flag.String("key", "key.pem", "Private key file for HTTPS")
+	https  = flag.Bool("https", false, "Use HTTPS (TLS)")
 )
 
 // Small utility web server intended to be easy to hack on top of
@@ -26,7 +27,10 @@ func main() {
 
 	http.HandleFunc("/", rootHandler)
 
-	if len(*cert) > 0 && len(*key) > 0 {
+	if *https {
+		if !(len(*cert) > 0 && len(*key) > 0) {
+			log.Fatal("err: must supply certificate and key file path arguments")
+		}
 		// HTTPS
 		log.Println("Listening on https://localhost" + *port + " ...")
 		log.Fatal(http.ListenAndServeTLS(*port, *cert, *key, nil))
