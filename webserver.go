@@ -1,4 +1,4 @@
-// Copyright (c) 2019, Microsoft Corporation, Sean Hinchee
+// Copyright (c) 2024, Microsoft Corporation, Sean Hinchee
 package main
 
 import (
