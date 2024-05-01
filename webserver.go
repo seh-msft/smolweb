@@ -26,10 +26,7 @@ func main() {
 
 	http.HandleFunc("/", rootHandler)
 
-	if *https {
-		if !(len(*cert) > 0 && len(*key) > 0) {
-			log.Fatal("err: must supply certificate and key file path arguments")
-		}
+	if len(*cert) > 0 && len(*key) > 0 {
 		// HTTPS
 		log.Println("Listening on https://localhost" + *port + " ...")
 		log.Fatal(http.ListenAndServeTLS(*port, *cert, *key, nil))
@@ -38,8 +35,6 @@ func main() {
 		log.Println("Listening on http://localhost" + *port + " ...")
 		log.Fatal(http.ListenAndServe(*port, nil))
 	}
-
-	log.Fatal(http.ListenAndServe(*port, nil))
 }
 
 // Handle requests to /
