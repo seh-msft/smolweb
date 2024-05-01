@@ -16,8 +16,8 @@ import (
 var (
 	port   = flag.String("port", ":1337", "Listening port for HTTP server")
 	target = flag.String("to", "foo.crm.dynamics.com/bar", "Path to redirect")
-	cert   = flag.String("cert", "cert.pem", "Certificate file for HTTPS")
-	key    = flag.String("key", "key.pem", "Private key file for HTTPS")
+	cert   = flag.String("cert", "", "Certificate file for HTTPS (cert.pem)")
+	key    = flag.String("key", "", "Private key file for HTTPS (key.pem)")
 )
 
 // Small utility web server intended to be easy to hack on top of
