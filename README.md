@@ -30,9 +30,23 @@ Usage of webserver:
 
 ## Examples
 
-Generate an certificate/key pair and serve HTTPS:
+### Generate a certificate/key pair and serve HTTPS
 
 ```
 $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem
 $ smolweb -port :443 -cert cert.pem -key key.pem
 ```
+
+### Use a signed certificate/key pair
+
+```
+$ sudo certbot certonly --standalone -d SOME.DOMAIN
+```
+
+Files will appear by default at:
+
+`/etc/letsencrypt/live/SOME.DOMAIN/fullchain.pem`
+
+and
+
+`/etc/letsencrypt/live/SOME.DOMAIN/privkey.pem`
