@@ -26,7 +26,10 @@ func main() {
 
 	http.HandleFunc("/", rootHandler)
 
-	if len(*cert) > 0 && len(*key) > 0 {
+	if *https {
+		if !(len(*cert) > 0 && len(*key) > 0) {
+			log.Fatal("err: must supply certificate and key file path arguments")
+		}
 		// HTTPS
 		log.Println("Listening on https://localhost" + *port + " ...")
 		log.Fatal(http.ListenAndServeTLS(*port, *cert, *key, nil))
